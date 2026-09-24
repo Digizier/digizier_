@@ -26,3 +26,5 @@ node_modules
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+
+*.exe
