@@ -1,12 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Navigation from "@/components/Navigation";
-import Hero3DCanvas from "@/components/Hero3DCanvas";
-import VideoShowcase3D from "@/components/VideoShowcase3D";
-import ServiceCard3D from "@/components/ServiceCard3D";
 import AgenticWorkflowSim from "@/components/AgenticWorkflowSim";
 import BenchmarkComparison from "@/components/BenchmarkComparison";
 import CostEstimator from "@/components/CostEstimator";
@@ -17,70 +14,100 @@ import {
   Bot,
   Cpu,
   Layers,
-  Sparkles,
   ArrowRight,
   TrendingUp,
   MessageCircle,
   ExternalLink,
-  ShieldCheck,
-  CheckCircle,
   Laptop,
+  CheckCircle,
 } from "lucide-react";
 import { getWhatsAppUrl, WHATSAPP_DISPLAY } from "@/lib/utils";
 
 export default function Home() {
+  useEffect(() => {
+    const initScrollCraft = () => {
+      if (typeof window !== "undefined" && (window as any).ScrollCraft) {
+        try {
+          (window as any).ScrollCraft.mount(document.body);
+        } catch (err) {
+          console.warn("ScrollCraft initialization notice:", err);
+        }
+      }
+    };
+
+    if (typeof window !== "undefined") {
+      if ((window as any).ScrollCraft) {
+        initScrollCraft();
+      } else {
+        window.addEventListener("load", initScrollCraft);
+        return () => window.removeEventListener("load", initScrollCraft);
+      }
+    }
+  }, []);
+
   const generalWhatsAppUrl = getWhatsAppUrl(
-    "Hello Nadir! I'm interested in Digizier services (Website / WhatsApp AI / Digital Marketing). Can we discuss my project?"
+    "Hello Nadir! I am contacting you from the Digizier website to discuss a project."
   );
 
   return (
-    <div className="relative min-h-screen bg-[#080c14] text-slate-100 overflow-x-hidden">
-      {/* Navigation */}
+    <div className="relative min-h-screen bg-[#08090b] text-[#f4f2ef]">
+      {/* Scrollcraft Global Progress Bar & Atmosphere Grain */}
+      <span data-sc-progress></span>
+      <div className="sc-grain" aria-hidden="true"></div>
+
+      {/* Persistent Navigation */}
       <Navigation />
 
-      {/* Hero Section */}
-      <section className="relative pt-28 sm:pt-36 pb-12 sm:pb-16 overflow-hidden ambient-glow">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            {/* Left Column: Hero Text */}
-            <div className="lg:col-span-7 space-y-5 text-center lg:text-left z-10">
-              {/* Founder & Verified Badge */}
-              <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full glass-panel border border-orange-500/30 text-xs font-mono text-slate-200 shadow-sm">
-                <div className="relative w-5 h-5 rounded-full overflow-hidden ring-1 ring-orange-500/50 flex-shrink-0">
-                  <Image
-                    src="/logo.png"
-                    alt="Digizier"
-                    width={20}
-                    height={20}
-                    className="w-full h-full object-cover"
-                    unoptimized
-                  />
-                </div>
-                <span>Nadir Habib • AI & Web Systems Architect</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+      <main id="top">
+        {/* =========================================================================
+            ACT 1 · RECOGNITION (Device: scrub)
+            Dimensional Hero with background video scrub, contrast scrim, and greet copy
+            ========================================================================= */}
+        <section
+          data-sc-act="scrub"
+          data-sc-span="2.4"
+          data-sc-dwell="0.32"
+          data-sc-drift="#08090b"
+          className="relative"
+        >
+          <div data-sc-stage className="sc-stage">
+            <img
+              className="sc-stage__poster"
+              src="/video-poster.jpg"
+              alt="Digizier Web & AI Architecture"
+            />
+            <video
+              data-sc-scrub
+              data-sc-src="/digizier-promo.mp4"
+              muted
+              playsInline
+            ></video>
+            <div className="sc-scrim sc-scrim--lead" aria-hidden="true"></div>
+
+            {/* Greet Copy: 0 0.78 0 means visible immediately upon page load */}
+            <div className="sc-copy sc-copy--lead" data-sc-cue="0 0.78 0">
+              <div className="inline-flex items-center gap-2 mb-3 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-orange-400">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                Nadir Habib (Founder) · Web & AI Systems Architect
               </div>
 
-              {/* Main Headline */}
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.12]">
-                We Build{" "}
-                <span className="bg-gradient-to-r from-orange-400 via-amber-300 to-emerald-400 bg-clip-text text-transparent">
-                  Websites, AI Agents & Marketing
-                </span>{" "}
-                That Grow Your Business.
+              <h1
+                className="sc-display sc-display--xl font-semibold tracking-tight text-white leading-tight"
+                data-sc-kinetic="lines"
+              >
+                Websites, AI agents & marketing that sell.
               </h1>
 
-              {/* Sub-headline */}
-              <p className="text-sm sm:text-base lg:text-lg text-slate-300 max-w-xl mx-auto lg:mx-0 leading-relaxed font-normal">
-                Digizier helps Pakistani and international brands build lightning-fast e-commerce stores, 24/7 WhatsApp AI chatbots, and high-ROI digital marketing funnels that operate around the clock.
+              <p className="sc-body mt-4 text-zinc-300 text-sm sm:text-base max-w-lg leading-relaxed">
+                Custom Next.js web applications, 24/7 WhatsApp AI sales agents, and high-ROAS marketing funnels for Pakistani and global businesses.
               </p>
 
-              {/* Action Buttons: Direct to WhatsApp */}
-              <div className="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5">
+              <div className="mt-6 flex flex-wrap items-center gap-3.5">
                 <a
                   href={generalWhatsAppUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto px-7 py-3.5 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm shadow-lg shadow-emerald-500/25 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 cursor-pointer"
+                  className="px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm shadow-xl shadow-emerald-950/40 transition-transform active:scale-95 flex items-center gap-2"
                 >
                   <MessageCircle className="w-4 h-4 fill-white" />
                   Chat on WhatsApp ({WHATSAPP_DISPLAY})
@@ -88,246 +115,474 @@ export default function Home() {
 
                 <a
                   href="#estimator"
-                  className="w-full sm:w-auto px-6 py-3.5 rounded-2xl glass-panel border border-white/10 hover:border-white/20 text-slate-200 hover:text-white font-semibold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="px-5 py-3 rounded-xl border border-white/20 hover:border-white/40 text-zinc-200 text-sm font-medium transition-colors backdrop-blur-md"
                 >
                   Calculate Cost in PKR ↓
                 </a>
               </div>
-
-              {/* Trust Metric Badges */}
-              <div className="pt-4 grid grid-cols-3 gap-2.5 border-t border-white/10 max-w-md mx-auto lg:mx-0 text-left">
-                <div className="p-2.5 rounded-xl bg-surface-200/50 border border-white/5">
-                  <span className="text-xs font-mono text-emerald-400 block font-bold">100 / 100</span>
-                  <span className="text-[10px] text-slate-400">Mobile Speed</span>
-                </div>
-                <div className="p-2.5 rounded-xl bg-surface-200/50 border border-white/5">
-                  <span className="text-xs font-mono text-sky-400 block font-bold">Rs. 0 / mo</span>
-                  <span className="text-[10px] text-slate-400">Server Hosting</span>
-                </div>
-                <div className="p-2.5 rounded-xl bg-surface-200/50 border border-white/5">
-                  <span className="text-xs font-mono text-orange-400 block font-bold">24 / 7</span>
-                  <span className="text-[10px] text-slate-400">WhatsApp AI Uptime</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column: 3D Interactive WebGL Hero Canvas */}
-            <div className="lg:col-span-5 relative w-full h-[360px] sm:h-[460px] flex items-center justify-center">
-              <div className="w-full h-full rounded-3xl overflow-hidden glass-panel border border-white/10 shadow-2xl relative">
-                {/* 3D Canvas */}
-                <Hero3DCanvas />
-
-                {/* Overlaid Status Badge */}
-                <div className="absolute bottom-4 left-4 right-4 p-3 rounded-2xl bg-black/60 backdrop-blur-xl border border-white/10 flex items-center justify-between text-[11px] font-mono">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                    <span className="text-slate-200 font-semibold">AI Systems Active</span>
-                  </div>
-                  <span className="text-orange-400">WebGL • 0% CPU Idle</span>
-                </div>
-              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Cinematic 3D Video Showcase */}
-      <VideoShowcase3D />
+        {/* =========================================================================
+            ACT 2 · TENSION (Device: pin)
+            Progressive argument: The cost of generic templates vs. custom architecture
+            ========================================================================= */}
+        <section
+          data-sc-act="pin"
+          data-sc-span="3.4"
+          data-sc-drift="#101217"
+          className="relative"
+        >
+          <div
+            data-sc-stage
+            className="sc-stage flex flex-col justify-center items-center px-6 text-center max-w-4xl mx-auto"
+          >
+            <p
+              className="text-xl sm:text-3xl lg:text-4xl text-zinc-400 font-light max-w-3xl leading-relaxed"
+              data-sc-cue="0 0.32 0"
+            >
+              Slow WordPress themes and generic templates lose half your mobile customers before the first product even renders.
+            </p>
 
-      {/* Services Section */}
-      <section id="services" className="py-16 sm:py-20 relative">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-soft-violet/30 bg-soft-violet/10 text-soft-violet text-xs font-mono mb-3">
-              <Layers className="w-3.5 h-3.5" />
-              SOLUTIONS THAT GROW BUSINESSES
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-3">
-              Comprehensive Digital Services
-            </h2>
-            <p className="text-sm sm:text-base text-slate-300">
-              From custom websites and automated WhatsApp bots to ROI-driven digital marketing, we create practical solutions designed around your revenue goals.
+            <p
+              className="text-xl sm:text-3xl lg:text-4xl text-zinc-300 font-light max-w-3xl leading-relaxed mt-6"
+              data-sc-cue="0.26 0.60"
+            >
+              Ad spend pours into broken checkouts, while customer inquiries on WhatsApp sit unanswered for hours.
+            </p>
+
+            <p
+              className="text-xl sm:text-3xl lg:text-4xl text-zinc-200 font-light max-w-3xl leading-relaxed mt-6"
+              data-sc-cue="0.54 0.88"
+            >
+              You pay heavy recurring monthly server bills for bloated software that collapses under real traffic spikes.
+            </p>
+
+            <p
+              className="text-2xl sm:text-4xl lg:text-5xl text-orange-400 font-semibold max-w-3xl leading-tight mt-8"
+              data-sc-cue="0.82"
+            >
+              Digizier replaces brittle tools with custom code, instant zero-cost hosting, and autonomous 24/7 AI agents.
             </p>
           </div>
+        </section>
 
-          {/* Responsive 3-Column Services Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Service 1: Custom Websites & E-Commerce */}
-            <ServiceCard3D
-              title="Custom Websites & E-Commerce"
-              badge="Fast & High Converting"
-              accentColor="cyan"
-              icon={Code2}
-              description="Fast, mobile-responsive online stores and business websites with full custom admin dashboards, Cash on Delivery (COD), EasyPaisa, JazzCash, and bank transfer support."
-              features={[
-                "Comprehensive Admin Panel & Order Tracking",
-                "Product Catalog, Filters & Coupon Engines",
-                "Instant Page Load (0ms Cold Start on 4G)",
-                "Local & International Payment Integrations",
-              ]}
-              techTags={["Next.js", "E-Commerce", "Admin Panel", "COD & Gateways", "SEO"]}
-            />
+        {/* =========================================================================
+            ACT 3 · TURN & LIVE DEMONSTRATION (Device: flow + reveal)
+            Interactive WhatsApp AI Automation Simulator & Flow
+            ========================================================================= */}
+        <section
+          id="workflow"
+          className="sc-section py-20 relative"
+          data-sc-act="flow"
+          data-sc-drift="#0b0c0f"
+        >
+          <div className="max-w-6xl mx-auto px-4 sm:px-6" data-sc-in data-sc-stagger="70">
+            <AgenticWorkflowSim />
+          </div>
+        </section>
 
-            {/* Service 2: AI Agents & WhatsApp Automation */}
-            <ServiceCard3D
-              title="AI Agents & WhatsApp Automation"
-              badge="24/7 Customer Sales"
-              accentColor="violet"
-              icon={Bot}
-              description="AI-powered WhatsApp assistants that speak English and Roman Urdu, handle customer questions, take orders automatically, and qualify incoming leads 24/7."
-              features={[
-                "24/7 WhatsApp AI Customer Support Bot",
-                "Automated Catalog Browsing & Order Booking",
-                "Instant Lead Qualification & Notifications",
-                "Smooth Human Agent Handoff when needed",
-              ]}
-              techTags={["WhatsApp API", "AI Chatbots", "LangChain", "Urdu/English", "CRM"]}
-            />
-
-            {/* Service 3: Performance Digital Marketing & Ads */}
-            <ServiceCard3D
-              title="Performance Digital Marketing & Ads"
-              badge="ROI Driven Growth"
-              accentColor="emerald"
-              icon={TrendingUp}
-              description="High-converting Meta (Facebook & Instagram) and Google ad campaigns designed to reach buyers across Pakistan and overseas with maximum return on ad spend."
-              features={[
-                "Meta (Facebook & Instagram) Ads Management",
-                "Google Search & Conversion API (CAPI) Setup",
-                "Direct-to-WhatsApp Click Ads with High ROAS",
-                "Ad Creatives & Landing Page Optimization",
-              ]}
-              techTags={["Meta Ads", "Google Ads", "WhatsApp Ads", "ROAS Scaling", "CRO"]}
-            />
-
-            {/* Service 4: Business Workflow Automation */}
-            <ServiceCard3D
-              title="Business Workflow Automation (n8n)"
-              badge="Zero Manual Work"
-              accentColor="orange"
-              icon={Cpu}
-              description="Connect your website, social media leads, and customer databases into automated pipelines. Eliminate manual data entry and save hours every day."
-              features={[
-                "n8n & Custom Webhook Automations",
-                "Facebook/WhatsApp Lead → Google Sheets Sync",
-                "Automated Customer Confirmation Messages",
-                "Order Status Alerts to Packing & Courier Teams",
-              ]}
-              techTags={["n8n Workflows", "Google Sheets", "Webhooks", "CRM Sync", "APIs"]}
-            />
-
-            {/* Service 5: Custom Dashboards & Web Software */}
-            <ServiceCard3D
-              title="Custom Dashboards & Business Tools"
-              badge="Tailored Systems"
-              accentColor="cyan"
-              icon={Laptop}
-              description="Bespoke internal software, customer portals, clinic appointment booking, and retail inventory management built to match your exact business workflow."
-              features={[
-                "Role-Based Access for Staff & Admins",
-                "Real-Time Sales & Revenue Analytics",
-                "Appointment & Table Reservation Engines",
-                "Secure PostgreSQL Database Architecture",
-              ]}
-              techTags={["SaaS Systems", "PostgreSQL", "Supabase", "Analytics", "Portals"]}
-            />
-
-            {/* Service 6: Custom Requirements Card */}
-            <div className="rounded-3xl p-6 sm:p-7 glass-panel border border-orange-500/25 hover:border-orange-500/50 hover:shadow-xl hover:shadow-orange-500/10 transition-all flex flex-col justify-between group">
-              <div>
-                <div className="w-12 h-12 rounded-2xl bg-orange-500/10 border border-orange-500/30 text-orange-400 p-2.5 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
-                  <Sparkles className="w-6 h-6" />
-                </div>
-                <span className="text-[10px] font-mono tracking-wide uppercase px-2.5 py-1 rounded-full border border-orange-500/30 bg-orange-500/10 text-orange-400">
-                  Custom Strategy
+        {/* =========================================================================
+            ACT 4 · CAPABILITIES (Device: pan)
+            Horizontal Rail across 5 core disciplines with 3D tilt
+            ========================================================================= */}
+        <section
+          id="services"
+          data-sc-act="pan"
+          data-sc-span="3.8"
+          data-sc-drift="#0a0b0d"
+          className="relative"
+        >
+          <div data-sc-stage className="sc-stage flex items-center overflow-hidden">
+            <div
+              className="flex gap-6 sm:gap-8 px-6 sm:px-16 items-center min-w-max"
+              data-sc-pan="0.12"
+            >
+              {/* Rail Lead Header */}
+              <div className="w-[280px] sm:w-[360px] flex-shrink-0 sc-stack pr-4 sm:pr-8">
+                <span className="sc-label text-orange-400 font-mono text-xs uppercase tracking-wider">
+                  Engineered Capabilities
                 </span>
-                <h3 className="text-xl font-bold text-white tracking-tight mt-3 mb-2">
-                  Have a Unique Business Need?
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                  Whether you run a fashion brand, pharmacy, clinic, restaurant, or real-estate agency, we architect a tailored digital solution for your workflow.
+                <h2 className="sc-display sc-display--md text-white mt-2 font-semibold">
+                  What we build.
+                </h2>
+                <p className="sc-body mt-3 text-zinc-400 text-sm sm:text-base leading-relaxed">
+                  Every solution is custom coded for revenue, instant mobile loading, and automated 24/7 business operations.
                 </p>
+                <div className="pt-4">
+                  <a
+                    href={generalWhatsAppUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-xs font-mono text-orange-400 hover:text-orange-300 transition-colors"
+                  >
+                    Discuss on WhatsApp →
+                  </a>
+                </div>
               </div>
 
-              <div className="pt-5 border-t border-white/5">
+              {/* Service 1: Custom Websites & E-Commerce */}
+              <article
+                className="w-[310px] sm:w-[370px] flex-shrink-0 rounded-2xl p-6 sm:p-7 bg-[#101217] border border-white/10 shadow-xl flex flex-col justify-between"
+                data-sc-tilt="6"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-400 flex items-center justify-center">
+                      <Code2 className="w-5 h-5" />
+                    </div>
+                    <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full border border-orange-500/30 bg-orange-500/10 text-orange-300 uppercase">
+                      Fast & High Converting
+                    </span>
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-bold text-white mb-2">
+                    Custom Websites & E-Commerce
+                  </h3>
+                  <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed mb-4">
+                    High-speed online stores and business web platforms with full custom admin dashboards, Cash on Delivery (COD), EasyPaisa, and JazzCash.
+                  </p>
+                  <ul className="space-y-2 text-xs text-zinc-300 mb-6">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-3.5 h-3.5 text-orange-400 flex-shrink-0" />
+                      Comprehensive Admin Panel & Order Tracking
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-3.5 h-3.5 text-orange-400 flex-shrink-0" />
+                      Product Catalog, Filters & Coupon Engines
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-3.5 h-3.5 text-orange-400 flex-shrink-0" />
+                      Instant Page Load (0ms Cold Start on 4G)
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-3.5 h-3.5 text-orange-400 flex-shrink-0" />
+                      Local & International Payment Integrations
+                    </li>
+                  </ul>
+                </div>
                 <a
-                  href={generalWhatsAppUrl}
+                  href={getWhatsAppUrl("Hello Nadir! I am interested in building a Custom E-Commerce Website with Digizier.")}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-2.5 px-3 rounded-xl bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="w-full py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-white flex items-center justify-center gap-2 transition-colors"
                 >
-                  <MessageCircle className="w-3.5 h-3.5 fill-white" />
-                  Discuss Custom Plan on WhatsApp
+                  <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
+                  Inquire on WhatsApp
                 </a>
-              </div>
+              </article>
+
+              {/* Service 2: AI Agents & WhatsApp Automation */}
+              <article
+                className="w-[310px] sm:w-[370px] flex-shrink-0 rounded-2xl p-6 sm:p-7 bg-[#101217] border border-white/10 shadow-xl flex flex-col justify-between"
+                data-sc-tilt="6"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center">
+                      <Bot className="w-5 h-5" />
+                    </div>
+                    <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 uppercase">
+                      24/7 Sales Engine
+                    </span>
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-bold text-white mb-2">
+                    AI Agents & WhatsApp Automation
+                  </h3>
+                  <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed mb-4">
+                    AI-powered WhatsApp assistants that speak English and Roman Urdu, handle customer inquiries, take orders automatically, and qualify incoming leads around the clock.
+                  </p>
+                  <ul className="space-y-2 text-xs text-zinc-300 mb-6">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                      24/7 WhatsApp AI Customer Support Bot
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                      Automated Catalog Browsing & Order Booking
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                      Instant Lead Qualification & Notifications
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                      Smooth Human Agent Handoff when needed
+                    </li>
+                  </ul>
+                </div>
+                <a
+                  href={getWhatsAppUrl("Hello Nadir! I am interested in WhatsApp AI Agents & Customer Bots with Digizier.")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-white flex items-center justify-center gap-2 transition-colors"
+                >
+                  <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
+                  Inquire on WhatsApp
+                </a>
+              </article>
+
+              {/* Service 3: Performance Digital Marketing & Ads */}
+              <article
+                className="w-[310px] sm:w-[370px] flex-shrink-0 rounded-2xl p-6 sm:p-7 bg-[#101217] border border-white/10 shadow-xl flex flex-col justify-between"
+                data-sc-tilt="6"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/20 text-sky-400 flex items-center justify-center">
+                      <TrendingUp className="w-5 h-5" />
+                    </div>
+                    <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full border border-sky-500/30 bg-sky-500/10 text-sky-300 uppercase">
+                      High ROAS Funnels
+                    </span>
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-bold text-white mb-2">
+                    Performance Digital Marketing
+                  </h3>
+                  <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed mb-4">
+                    High-converting Meta (Facebook & Instagram) and Google ad campaigns designed to reach buyers across Pakistan and internationally with maximum return on ad spend.
+                  </p>
+                  <ul className="space-y-2 text-xs text-zinc-300 mb-6">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-3.5 h-3.5 text-sky-400 flex-shrink-0" />
+                      Meta (Facebook & Instagram) Ads Management
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-3.5 h-3.5 text-sky-400 flex-shrink-0" />
+                      Google Search & Conversion API (CAPI) Setup
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-3.5 h-3.5 text-sky-400 flex-shrink-0" />
+                      Direct-to-WhatsApp Click Ads with High ROAS
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-3.5 h-3.5 text-sky-400 flex-shrink-0" />
+                      Ad Creatives & Landing Page Optimization
+                    </li>
+                  </ul>
+                </div>
+                <a
+                  href={getWhatsAppUrl("Hello Nadir! I am interested in Performance Digital Marketing & Ads Scaling with Digizier.")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-white flex items-center justify-center gap-2 transition-colors"
+                >
+                  <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
+                  Inquire on WhatsApp
+                </a>
+              </article>
+
+              {/* Service 4: Business Workflow Automation (n8n) */}
+              <article
+                className="w-[310px] sm:w-[370px] flex-shrink-0 rounded-2xl p-6 sm:p-7 bg-[#101217] border border-white/10 shadow-xl flex flex-col justify-between"
+                data-sc-tilt="6"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center">
+                      <Cpu className="w-5 h-5" />
+                    </div>
+                    <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-300 uppercase">
+                      Zero Manual Work
+                    </span>
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-bold text-white mb-2">
+                    Workflow Automation (n8n)
+                  </h3>
+                  <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed mb-4">
+                    Connect your website, social media leads, and customer databases into automated pipelines. Eliminate manual data entry and save hours every day.
+                  </p>
+                  <ul className="space-y-2 text-xs text-zinc-300 mb-6">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" />
+                      n8n & Custom Webhook Automations
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" />
+                      Facebook/WhatsApp Lead → Google Sheets Sync
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" />
+                      Automated Customer Confirmation Messages
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" />
+                      Order Status Alerts to Packing & Courier Teams
+                    </li>
+                  </ul>
+                </div>
+                <a
+                  href={getWhatsAppUrl("Hello Nadir! I am interested in Business Workflow Automation (n8n) with Digizier.")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-white flex items-center justify-center gap-2 transition-colors"
+                >
+                  <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
+                  Inquire on WhatsApp
+                </a>
+              </article>
+
+              {/* Service 5: Custom Dashboards & Web Software */}
+              <article
+                className="w-[310px] sm:w-[370px] flex-shrink-0 rounded-2xl p-6 sm:p-7 bg-[#101217] border border-white/10 shadow-xl flex flex-col justify-between"
+                data-sc-tilt="6"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center">
+                      <Laptop className="w-5 h-5" />
+                    </div>
+                    <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-300 uppercase">
+                      Tailored Systems
+                    </span>
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-bold text-white mb-2">
+                    Custom Portals & Dashboards
+                  </h3>
+                  <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed mb-4">
+                    Bespoke internal software, customer portals, clinic appointment booking, and retail inventory management built to match your exact business workflow.
+                  </p>
+                  <ul className="space-y-2 text-xs text-zinc-300 mb-6">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-3.5 h-3.5 text-purple-400 flex-shrink-0" />
+                      Role-Based Access for Staff & Admins
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-3.5 h-3.5 text-purple-400 flex-shrink-0" />
+                      Real-Time Sales & Revenue Analytics
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-3.5 h-3.5 text-purple-400 flex-shrink-0" />
+                      Appointment & Table Reservation Engines
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-3.5 h-3.5 text-purple-400 flex-shrink-0" />
+                      Secure PostgreSQL Database Architecture
+                    </li>
+                  </ul>
+                </div>
+                <a
+                  href={getWhatsAppUrl("Hello Nadir! I am interested in Custom Dashboards & Web Software with Digizier.")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-white flex items-center justify-center gap-2 transition-colors"
+                >
+                  <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
+                  Inquire on WhatsApp
+                </a>
+              </article>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Interactive AI Automation Flow */}
-      <AgenticWorkflowSim />
+        {/* =========================================================================
+            ACT 5 · THE EDGE BENCHMARK (Device: flow)
+            Speed, cost, and architecture matrix
+            ========================================================================= */}
+        <section
+          id="comparison"
+          className="sc-section py-20 relative"
+          data-sc-act="flow"
+          data-sc-drift="#090a0d"
+        >
+          <div className="max-w-6xl mx-auto px-4 sm:px-6" data-sc-in>
+            <BenchmarkComparison />
+          </div>
+        </section>
 
-      {/* Performance Benchmark Matrix */}
-      <BenchmarkComparison />
+        {/* =========================================================================
+            ACT 6 · TRANSPARENT PKR PRICING ESTIMATOR (Device: flow)
+            PKR calculator with direct WhatsApp scope compilation
+            ========================================================================= */}
+        <section
+          id="estimator"
+          className="sc-section py-20 relative"
+          data-sc-act="flow"
+          data-sc-drift="#0c0d11"
+        >
+          <div className="max-w-6xl mx-auto px-4 sm:px-6" data-sc-in>
+            <CostEstimator />
+          </div>
+        </section>
 
-      {/* PKR Cost Estimator with direct WhatsApp submission */}
-      <CostEstimator />
-
-      {/* Direct Strategy Brief / WhatsApp CTA Section */}
-      <section id="contact" className="py-16 sm:py-20 relative overflow-hidden">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <div className="rounded-3xl glass-panel border border-white/10 p-7 sm:p-12 text-center relative overflow-hidden shadow-2xl">
-            <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-orange-500 to-amber-500 p-[1px] mx-auto mb-5 shadow-lg shadow-orange-500/20">
-              <div className="w-full h-full bg-[#080c14] rounded-full flex items-center justify-center">
+        {/* =========================================================================
+            ACT 7 · COMMITMENT CLOSE & FOOTER (Device: pin + pointer)
+            Last element on the page, short span, footer inside stage
+            ========================================================================= */}
+        <section
+          id="contact"
+          data-sc-act="pin"
+          data-sc-span="1.25"
+          data-sc-drift="#08090b"
+          className="relative"
+        >
+          <div
+            data-sc-stage
+            className="sc-stage flex flex-col justify-between"
+            data-sc-spotlight
+          >
+            <div className="my-auto max-w-3xl mx-auto px-6 text-center pt-16">
+              <div className="relative w-14 h-14 rounded-full ring-2 ring-orange-500/50 p-1 mx-auto mb-6 shadow-xl shadow-orange-500/15 overflow-hidden">
                 <Image
                   src="/logo.png"
+                  width={56}
+                  height={56}
                   alt="Digizier"
-                  width={36}
-                  height={36}
-                  className="w-8 h-8 object-cover rounded-full"
+                  className="w-full h-full object-cover rounded-full"
                   unoptimized
                 />
               </div>
+
+              <h2
+                className="sc-display sc-display--lg text-white font-semibold"
+                data-sc-cue="0.06"
+                data-sc-kinetic="lines"
+              >
+                Ready to build your digital system?
+              </h2>
+
+              <p
+                className="sc-body mt-4 text-zinc-300 max-w-xl mx-auto text-sm sm:text-base leading-relaxed"
+                data-sc-cue="0.06"
+              >
+                Nadir Habib personally discusses your requirements. We engineer websites, 24/7 AI agents, and marketing systems built around your revenue goals.
+              </p>
+
+              <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a
+                  className="px-8 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm shadow-xl shadow-emerald-950/50 transition-transform active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
+                  href={generalWhatsAppUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-sc-magnet="0.26"
+                  data-sc-cue="0.06"
+                  data-sc-rise="0"
+                >
+                  <MessageCircle className="w-4 h-4 fill-white" />
+                  Chat with Nadir on WhatsApp ({WHATSAPP_DISPLAY})
+                </a>
+
+                <a
+                  className="px-6 py-3.5 rounded-xl border border-white/10 hover:border-white/20 text-zinc-300 hover:text-white text-sm font-semibold transition-colors flex items-center gap-2 cursor-pointer"
+                  href="https://www.fiverr.com/digizier"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-sc-cue="0.06"
+                  data-sc-rise="0"
+                >
+                  Order via Fiverr Verified ↗
+                </a>
+              </div>
             </div>
 
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight mb-3">
-              Ready to Build Your Next Digital Solution?
-            </h2>
-            <p className="text-sm sm:text-base text-slate-300 max-w-xl mx-auto mb-7">
-              Tell us about your business goals. Nadir Habib will personally discuss your project and help you plan a website, AI agent, or marketing system that fits your budget.
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              <a
-                href={generalWhatsAppUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm shadow-xl shadow-emerald-500/25 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <MessageCircle className="w-4 h-4 fill-white" />
-                Message Nadir on WhatsApp ({WHATSAPP_DISPLAY})
-              </a>
-
-              <a
-                href="https://www.fiverr.com/digizier"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-auto px-6 py-3.5 rounded-2xl glass-panel border border-white/10 hover:border-white/20 text-slate-200 hover:text-white font-semibold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
-              >
-                Order via Fiverr
-                <ExternalLink className="w-3.5 h-3.5 opacity-70" />
-              </a>
-            </div>
+            {/* Seamless stage-grounded Footer */}
+            <Footer />
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
-      {/* Floating WhatsApp Quick Action Button */}
+      {/* Floating WhatsApp Action Pill */}
       <FloatingWhatsApp />
-
-      {/* Footer */}
-      <Footer />
     </div>
   );
 }
