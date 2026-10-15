@@ -62,6 +62,8 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/icon.png" sizes="any" />
         <link rel="apple-touch-icon" href="/logo.png" />
+        <link rel="stylesheet" href="/scrollcraft.css" />
+        <script src="/scrollcraft.js" defer></script>
       </head>
       <body className="bg-[#08090b] text-[#f4f2ef] antialiased min-h-screen selection:bg-orange-500/30 selection:text-white">
         {children}

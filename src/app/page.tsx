@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Navigation from "@/components/Navigation";
@@ -33,19 +33,51 @@ import {
 import { getWhatsAppUrl, WHATSAPP_DISPLAY } from "@/lib/utils";
 
 export default function Home() {
+  // Mount Scrollcraft Engine for atmosphere, color drift, flow reveals, and magnetic buttons
+  useEffect(() => {
+    const initScrollCraft = () => {
+      if (typeof window !== "undefined" && (window as any).ScrollCraft) {
+        try {
+          (window as any).ScrollCraft.mount(document.body);
+        } catch (err) {
+          console.warn("ScrollCraft initialization notice:", err);
+        }
+      }
+    };
+
+    if (typeof window !== "undefined") {
+      if ((window as any).ScrollCraft) {
+        initScrollCraft();
+      } else {
+        window.addEventListener("load", initScrollCraft);
+        return () => window.removeEventListener("load", initScrollCraft);
+      }
+    }
+  }, []);
+
   const generalWhatsAppUrl = getWhatsAppUrl(
     "Hello Nadir! I am interested in Digizier services (Website / WhatsApp AI / Digital Marketing). Can we discuss my project?"
   );
 
   return (
     <div className="relative min-h-screen bg-[#08090b] text-[#f4f2ef] overflow-x-hidden selection:bg-orange-500/30 selection:text-white">
+      {/* Scrollcraft Global Progress Bar (Top 2px Orange Line) */}
+      <span data-sc-progress></span>
+
+      {/* Scrollcraft Tactile Grain Overlay (Prevents OLED/Display Banding) */}
+      <div className="sc-grain" aria-hidden="true"></div>
+
       {/* Global Header Navigation */}
       <Navigation />
 
       {/* =========================================================================
-          HERO SECTION (High-Tech, Mobile & Desktop Responsive, Zero Delay)
+          ACT 1 · HERO SECTION (Dimensional Layering, 0ms Lag, Mobile & Desktop Snug)
           ========================================================================= */}
-      <section className="relative pt-24 sm:pt-32 pb-12 sm:pb-16 overflow-hidden ambient-glow">
+      <section
+        data-sc-act="flow"
+        data-sc-drift="#08090b"
+        className="relative pt-24 sm:pt-32 pb-12 sm:pb-16 overflow-hidden ambient-glow"
+      >
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Left Column: Hero Copy & Actions */}
@@ -67,7 +99,7 @@ export default function Home() {
               </div>
 
               {/* Main Headline */}
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.12]">
+              <h1 className="sc-display sc-display--xl text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.12]">
                 We Build{" "}
                 <span className="bg-gradient-to-r from-orange-400 via-amber-300 to-emerald-400 bg-clip-text text-transparent">
                   Websites, AI Agents & Marketing
@@ -76,16 +108,17 @@ export default function Home() {
               </h1>
 
               {/* Sub-headline */}
-              <p className="text-sm sm:text-base lg:text-lg text-slate-300 max-w-xl mx-auto lg:mx-0 leading-relaxed font-normal">
+              <p className="sc-body text-sm sm:text-base lg:text-lg text-slate-300 max-w-xl mx-auto lg:mx-0 leading-relaxed font-normal">
                 Digizier helps Pakistani and international brands build lightning-fast e-commerce stores, 24/7 WhatsApp AI sales bots, and high-ROI digital marketing funnels that operate around the clock.
               </p>
 
-              {/* Action Buttons: Direct to WhatsApp */}
+              {/* Action Buttons: Direct to WhatsApp with Magnetic Spring Drift */}
               <div className="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5">
                 <a
                   href={generalWhatsAppUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-sc-magnet="0.25"
                   className="w-full sm:w-auto px-7 py-3.5 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm shadow-lg shadow-emerald-500/25 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 cursor-pointer"
                 >
                   <MessageCircle className="w-4 h-4 fill-white" />
@@ -103,7 +136,9 @@ export default function Home() {
               {/* Trust Metric Badges */}
               <div className="pt-4 grid grid-cols-3 gap-2.5 border-t border-white/10 max-w-md mx-auto lg:mx-0 text-left">
                 <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
-                  <span className="text-xs font-mono text-emerald-400 block font-bold">100 / 100</span>
+                  <span className="text-xs font-mono text-emerald-400 block font-bold" data-sc-count="0 100">
+                    100 / 100
+                  </span>
                   <span className="text-[10px] text-slate-400">Mobile Speed</span>
                 </div>
                 <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
@@ -119,7 +154,7 @@ export default function Home() {
 
             {/* Right Column: 3D Interactive WebGL Hero Canvas */}
             <div className="lg:col-span-5 relative w-full h-[320px] sm:h-[420px] flex items-center justify-center">
-              <div className="w-full h-full rounded-3xl overflow-hidden glass-panel border border-white/10 shadow-2xl relative">
+              <div className="w-full h-full rounded-3xl overflow-hidden glass-panel border border-white/10 shadow-2xl relative" data-sc-tilt="4">
                 {/* 3D Canvas */}
                 <Hero3DCanvas />
 
@@ -138,10 +173,14 @@ export default function Home() {
       </section>
 
       {/* =========================================================================
-          THE PROBLEM VS THE DIGIZIER SOLUTION (Snug, High-Impact Comparison)
+          ACT 2 · THE PROBLEM VS DIGIZIER (High Impact, Zero Lag)
           ========================================================================= */}
-      <section className="py-12 sm:py-16 relative border-y border-white/5 bg-[#0a0d14]/60">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <section
+        data-sc-act="flow"
+        data-sc-drift="#0a0d15"
+        className="py-12 sm:py-16 relative border-y border-white/5 bg-[#0a0d14]/60"
+      >
+        <div className="max-w-6xl mx-auto px-4 sm:px-6" data-sc-in>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
             {/* The Old / Generic Way */}
             <div className="rounded-3xl p-6 sm:p-8 bg-red-950/15 border border-red-500/20 flex flex-col justify-between">
@@ -171,7 +210,7 @@ export default function Home() {
             </div>
 
             {/* The Digizier Way */}
-            <div className="rounded-3xl p-6 sm:p-8 bg-emerald-950/15 border border-emerald-500/25 flex flex-col justify-between">
+            <div className="rounded-3xl p-6 sm:p-8 bg-emerald-950/15 border border-emerald-500/25 flex flex-col justify-between" data-sc-spotlight>
               <div>
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-mono mb-4">
                   <CheckCircle2 className="w-3.5 h-3.5" />
@@ -201,30 +240,37 @@ export default function Home() {
       </section>
 
       {/* =========================================================================
-          CINEMATIC 3D VIDEO SHOWCASE
+          ACT 3 · CINEMATIC 3D VIDEO SHOWCASE
           ========================================================================= */}
-      <VideoShowcase3D />
+      <section data-sc-act="flow" data-sc-drift="#0d101a">
+        <VideoShowcase3D />
+      </section>
 
       {/* =========================================================================
-          COMPREHENSIVE SERVICES GRID (All 6 Cards Fully Responsive)
+          ACT 4 · COMPREHENSIVE SERVICES (All 6 Cards Responsive Grid)
           ========================================================================= */}
-      <section id="services" className="py-16 sm:py-20 relative">
+      <section
+        id="services"
+        data-sc-act="flow"
+        data-sc-drift="#080a0f"
+        className="py-16 sm:py-20 relative"
+      >
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="text-center max-w-2xl mx-auto mb-12">
+          <div className="text-center max-w-2xl mx-auto mb-12" data-sc-in>
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-orange-500/30 bg-orange-500/10 text-orange-400 text-xs font-mono mb-3">
               <Layers className="w-3.5 h-3.5" />
               SOLUTIONS THAT GROW BUSINESSES
             </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-3">
+            <h2 className="sc-display sc-display--lg text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-3">
               Comprehensive Digital Services
             </h2>
-            <p className="text-sm sm:text-base text-slate-300">
+            <p className="sc-body text-sm sm:text-base text-slate-300">
               From custom websites and automated WhatsApp bots to ROI-driven digital marketing, we create practical solutions designed around your revenue goals.
             </p>
           </div>
 
           {/* Responsive 3-Column Services Grid (Clean mobile stack, 3-col desktop) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-sc-in data-sc-stagger="50">
             {/* Service 1: Custom Websites & E-Commerce */}
             <ServiceCard3D
               title="Custom Websites & E-Commerce"
@@ -306,7 +352,10 @@ export default function Home() {
             />
 
             {/* Service 6: Custom Requirements Card */}
-            <div className="rounded-3xl p-6 sm:p-7 glass-panel border border-orange-500/25 hover:border-orange-500/50 hover:shadow-xl hover:shadow-orange-500/10 transition-all flex flex-col justify-between group">
+            <div
+              className="rounded-3xl p-6 sm:p-7 glass-panel border border-orange-500/25 hover:border-orange-500/50 hover:shadow-xl hover:shadow-orange-500/10 transition-all flex flex-col justify-between group"
+              data-sc-spotlight
+            >
               <div>
                 <div className="w-12 h-12 rounded-2xl bg-orange-500/10 border border-orange-500/30 text-orange-400 p-2.5 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
                   <Sparkles className="w-6 h-6" />
@@ -337,6 +386,7 @@ export default function Home() {
                   href={generalWhatsAppUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-sc-magnet="0.2"
                   className="w-full py-2.5 px-3 rounded-xl bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-lg shadow-orange-500/20"
                 >
                   <MessageCircle className="w-3.5 h-3.5 fill-white" />
@@ -349,26 +399,61 @@ export default function Home() {
       </section>
 
       {/* =========================================================================
-          INTERACTIVE AI AUTOMATION SIMULATOR
+          ACT 5 · INTERACTIVE AI AUTOMATION SIMULATOR
           ========================================================================= */}
-      <AgenticWorkflowSim />
+      <section
+        id="workflow"
+        data-sc-act="flow"
+        data-sc-drift="#0a0c16"
+        className="py-16 sm:py-20 relative"
+      >
+        <div className="max-w-6xl mx-auto px-4 sm:px-6" data-sc-in>
+          <AgenticWorkflowSim />
+        </div>
+      </section>
 
       {/* =========================================================================
-          PERFORMANCE BENCHMARK MATRIX
+          ACT 6 · PERFORMANCE BENCHMARK MATRIX
           ========================================================================= */}
-      <BenchmarkComparison />
+      <section
+        id="comparison"
+        data-sc-act="flow"
+        data-sc-drift="#080b12"
+        className="py-16 sm:py-20 relative"
+      >
+        <div className="max-w-6xl mx-auto px-4 sm:px-6" data-sc-in>
+          <BenchmarkComparison />
+        </div>
+      </section>
 
       {/* =========================================================================
-          PKR COST ESTIMATOR (Transparent Pricing & WhatsApp Scope Submission)
+          ACT 7 · PKR COST ESTIMATOR (Transparent Pricing & WhatsApp Submission)
           ========================================================================= */}
-      <CostEstimator />
+      <section
+        id="estimator"
+        data-sc-act="flow"
+        data-sc-drift="#090d14"
+        className="py-16 sm:py-20 relative"
+      >
+        <div className="max-w-6xl mx-auto px-4 sm:px-6" data-sc-in>
+          <CostEstimator />
+        </div>
+      </section>
 
       {/* =========================================================================
-          DIRECT STRATEGY BRIEF / WHATSAPP CTA SECTION
+          ACT 8 · DIRECT STRATEGY BRIEF / WHATSAPP CTA SECTION
           ========================================================================= */}
-      <section id="contact" className="py-16 sm:py-20 relative overflow-hidden">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <div className="rounded-3xl glass-panel border border-white/10 p-7 sm:p-12 text-center relative overflow-hidden shadow-2xl">
+      <section
+        id="contact"
+        data-sc-act="flow"
+        data-sc-drift="#08090b"
+        className="py-16 sm:py-20 relative overflow-hidden"
+      >
+        <div className="max-w-4xl mx-auto px-4 sm:px-6" data-sc-in>
+          <div
+            className="rounded-3xl glass-panel border border-white/10 p-7 sm:p-12 text-center relative overflow-hidden shadow-2xl"
+            data-sc-spotlight
+          >
             <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-orange-500 to-amber-500 p-[1px] mx-auto mb-5 shadow-lg shadow-orange-500/20">
               <div className="w-full h-full bg-[#08090b] rounded-full flex items-center justify-center">
                 <Image
@@ -382,10 +467,10 @@ export default function Home() {
               </div>
             </div>
 
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight mb-3">
+            <h2 className="sc-display sc-display--lg text-2xl sm:text-4xl font-extrabold text-white tracking-tight mb-3">
               Ready to Build Your Next Digital Solution?
             </h2>
-            <p className="text-sm sm:text-base text-slate-300 max-w-xl mx-auto mb-7">
+            <p className="sc-body text-sm sm:text-base text-slate-300 max-w-xl mx-auto mb-7">
               Tell us about your business goals. Nadir Habib will personally discuss your project and help you plan a website, AI agent, or marketing system that fits your budget.
             </p>
 
@@ -394,6 +479,7 @@ export default function Home() {
                 href={generalWhatsAppUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-sc-magnet="0.25"
                 className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm shadow-xl shadow-emerald-500/25 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <MessageCircle className="w-4 h-4 fill-white" />
