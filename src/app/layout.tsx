@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     "Business Automation",
     "Custom Website Development",
     "E-commerce Development",
-    "Vibe Coding",
+    "Digital Marketing",
     "WhatsApp Automation",
     "n8n Workflows",
   ],
